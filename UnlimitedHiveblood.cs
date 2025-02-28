@@ -1,13 +1,13 @@
 ﻿using Modding;
 using System.Collections.Generic;
 using UnityEngine;
-using Satchel;
 using HutongGames.PlayMaker;
+using Satchel;
 
 namespace UnlimitedHiveblood {
     public class UnlimitedHiveblood: Mod {
         new public string GetName() => "UnlimitedHiveblood";
-        public override string GetVersion() => "1.0.0.1";
+        public override string GetVersion() => "1.0.0.2";
         public override void Initialize(Dictionary<string, Dictionary<string, GameObject>> preloadedObjects) {
             On.PlayMakerFSM.OnEnable += editFSM;
         }
@@ -16,7 +16,7 @@ namespace UnlimitedHiveblood {
             orig(self);
             if(self.gameObject.name == "Health" && self.FsmName == "Hive Health Regen") {
                 whiteHiveSynergy whiteHiveAction = new();
-                FsmState idleState = self.GetState("Idle");
+                FsmState idleState = self.GetValidState("Idle");
                 idleState.AddAction(whiteHiveAction);
                 idleState.AddTransition("HIVE SYNERGY", "Start Recovery");
             }
