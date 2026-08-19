@@ -7,7 +7,7 @@ using Satchel;
 namespace UnlimitedHiveblood {
     public class UnlimitedHiveblood: Mod {
         new public string GetName() => "UnlimitedHiveblood";
-        public override string GetVersion() => "1.0.0.2";
+        public override string GetVersion() => "1.0.0.3";
         public override void Initialize(Dictionary<string, Dictionary<string, GameObject>> preloadedObjects) {
             On.PlayMakerFSM.OnEnable += editFSM;
         }
@@ -26,7 +26,12 @@ namespace UnlimitedHiveblood {
     public class whiteHiveSynergy: FsmStateAction {
         public override void OnEnter() {
             PlayerData pd = PlayerData.instance;
-            if(pd.royalCharmState >= 3 && pd.equippedCharm_36 && pd.equippedCharm_29 && pd.health < pd.maxHealth) {
+            int rcs = pd.GetInt(nameof(PlayerData.royalCharmState));
+            bool e36 = pd.GetBool(nameof(PlayerData.equippedCharm_36));
+            bool e29 = pd.GetBool(nameof(PlayerData.equippedCharm_29));
+            int h = pd.GetInt(nameof(PlayerData.health));
+            int mh = pd.GetInt(nameof(PlayerData.maxHealth));
+            if(rcs >= 3 && e36 && e29 && h < mh) {
                 base.Fsm.Event("HIVE SYNERGY");
             }
         }
